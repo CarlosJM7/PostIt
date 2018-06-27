@@ -41,7 +41,7 @@ Item {
             height: 30
             onClicked: {
                 main.switch_to_page(main_page)
-                MainPage.add_new_note();
+                main_page.add_new_note();
             }
         }
     }
