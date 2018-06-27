@@ -2,5 +2,10 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainPage.qml</file>
+        <file>WallPaper.jpg</file>
+        <file>PostIt.qml</file>
+        <file>Tick.png</file>
+        <file>Little.qml</file>
+        <file>Example.qml</file>
     </qresource>
 </RCC>
