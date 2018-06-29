@@ -75,6 +75,7 @@ Item {
             onClicked: {
                 parent.parent.visible = false
                 main_page.delete_note(textEdit.text)
+
             }
         }
     }
