@@ -5,7 +5,6 @@ Image {
     id: image
     width: 375
     height: 667
-    clip: false
     anchors.fill: parent
     source: "WallPaper.jpg"
     visible: true
@@ -14,6 +13,7 @@ Image {
             id: rectangle
             x: 333
             y: 8
+            z: 1
             radius: 90
             width: 34
             height: 34
@@ -24,7 +24,8 @@ Image {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    main.switch_to_page(pst)
+                    write_new(pst)
+                    pst.change_text()
                 }
             }
 
@@ -40,51 +41,68 @@ Image {
             }
         }
 
-        Item {
-
-            id: example_page
-            visible: true
-
             GridView{
                 id:mygrid
                 anchors.fill: parent
                 delegate: mydelegate
                 model: model
-                cellWidth: example_page.width/5
+                cellWidth: image.width/3
+                cellHeight: 100
             }
 
             Component{
                 id: mydelegate
                 Rectangle{
                     color: "#f6df32"
-                    border.color: "transparent"
+                    border.color: "black"
                     border.width: 2
-                    width: example_page.width/4
-                    height: 100
+                    width: image.width/4
+                    height: 80
+
                     Text{
-                        text: "Pst " + index
+                        width: parent.width
+                        text: textoEscrito /*"Pst " + index*/ /*Aqui escribire el titulo de la nota*/
                         color: "black"
                         anchors.top: parent.top
+                        wrapMode: TextEdit.Wrap
                     }
-                   /*MouseArea{
+
+                    MouseArea{
                         anchors.fill: parent
                         onClicked:{
-                            console.log("the id: "+index)
-                            add_new_note()
+                            show_note(index)
                         }
-                    }*/
+                    }
                 }
-            }
+       }
 
             ListModel{
                 id: model
-                /*ListElement{
-                }*/
             }
+
+        PostIt{
+            id: pst
+            height: parent.height
+            width: parent.width
+            visible: false
         }
 
 
-        function add_new_note(){
-            model.append({})
+        function add_new_note(texto){
+            model.append({textoEscrito: texto})
         }
-    }
+
+        function write_new(note){
+            note.visible = true
+        }
+
+        function delete_note(nota_id){
+            model.remove(nota_id)
+        }
+
+        function show_note(nota_id){
+            pst.visible = true
+            pst.show_change_text(model.get(nota_id).textoEscrito)
+
+        }
+}

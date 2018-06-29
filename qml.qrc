@@ -7,5 +7,6 @@
         <file>Tick.png</file>
         <file>Little.qml</file>
         <file>Example.qml</file>
+        <file>TrashBucket.png</file>
     </qresource>
 </RCC>
