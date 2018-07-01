@@ -10,13 +10,15 @@ Image {
     visible: true
 
         Rectangle {
-            id: rectangle
-            x: 333
-            y: 8
-            z: 1
-            radius: 90
+            id: new_note
             width: 34
             height: 34
+            z: 1
+            radius: 90
+            anchors.right: parent.right
+            anchors.rightMargin: 5
+            anchors.top: parent.top
+            anchors.topMargin: 5
             color: "#00000000"
             border.width: 3
             border.color: "black"
@@ -30,9 +32,11 @@ Image {
             }
 
             Text{
-                color: "black"
-                anchors.fill: parent
                 text: "+"
+                color: "black"
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenterOffset: 1
                 horizontalAlignment: Text.AlignHCenter
                 verticalAlignment: Text.AlignVCenter
                 font.family: "Courier"
@@ -41,9 +45,28 @@ Image {
             }
         }
 
+        Image{
+            id: save_progress
+            source: "Sobre.png"
+            width: 34
+            height: 34
+            anchors.top: parent.top
+            anchors.topMargin: 5
+            anchors.left: parent.left
+            anchors.leftMargin: 5
+
+            MouseArea{
+                height: parent.height
+                width: parent.width
+            }
+        }
+
             GridView{
                 id:mygrid
-                anchors.fill: parent
+                height: parent.height*0.85
+                width: parent.width
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.horizontalCenter: parent.horizontalAlignment
                 delegate: mydelegate
                 model: model
                 cellWidth: image.width/3
@@ -55,26 +78,30 @@ Image {
                 Rectangle{
                     color: "#f6df32"
                     border.color: "black"
-                    border.width: 2
+                    border.width: 1
                     width: image.width/4
                     height: 80
+                    radius: 5
 
                     Text{
-                        width: parent.width
+                        width: parent.width*0.95
+                        height: parent.height*0.95
                         text: textoEscrito /*"Pst " + index*/ /*Aqui escribire el titulo de la nota*/
                         color: "black"
-                        anchors.top: parent.top
+                        anchors.verticalCenter: parent.verticalCenter
+                        anchors.horizontalCenter: parent.horizontalCenter
                         wrapMode: TextEdit.Wrap
                     }
 
                     MouseArea{
                         anchors.fill: parent
                         onClicked:{
+                            pst.posicion = index
                             show_note(index)
                         }
                     }
                 }
-       }
+            }
 
             ListModel{
                 id: model
@@ -94,6 +121,7 @@ Image {
 
         function write_new(note){
             note.visible = true
+            pst.creado = false
         }
 
         function delete_note(nota_id){
@@ -103,6 +131,9 @@ Image {
         function show_note(nota_id){
             pst.visible = true
             pst.show_change_text(model.get(nota_id).textoEscrito)
+        }
 
+        function update_text(nota_id, texto){
+            model.setProperty(nota_id,"textoEscrito", texto)
         }
 }

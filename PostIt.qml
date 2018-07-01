@@ -5,27 +5,30 @@ Item {
     height: 668
 
     property bool creado : false
+    property int posicion : 0
+
 
     Rectangle {
         id: rectangle
-        x: 63
-        y: 209
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.horizontalCenter: parent.horizontalCenter
         z: 1
         width: 250
         height: 250
         color: "#f6df32"
         border.width: 2
         border.color: "black"
-
+        radius: 5
 
         TextEdit {
             id: textEdit
-            width: parent.width
-            height: parent.height
-            text: qsTr("Write here")
+            width: parent.width*0.95
+            height: parent.height*0.95
+            text: "Write here"
             textFormat: Text.AutoText
             font.pixelSize: 12
-            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: TextEdit.Wrap
         }
     }
@@ -52,8 +55,9 @@ Item {
                     creado = true
                 }
                 else{
+
+                    main_page.update_text(posicion, textEdit.text)
                     parent.parent.visible = false
-                    //Otra funcion que cambie el texto
                 }
             }
         }

@@ -1,5 +1,6 @@
 import QtQuick 2.11
 import QtQuick.Window 2.11
+import FileIO 1.0
 
 Window {
     id: main
@@ -8,10 +9,10 @@ Window {
     height: 667
     title: qsTr("PostIt")
 
-    /*Example{
-        id: example_page
-        anchors.fill: parent
-    }*/
+    FileIO{
+        id: fileIO
+        source: "/Users/carlos/Desktop/QtWorkspace/PostIt/dataBox.json"
+    }
 
     MainPage{
         id: main_page
