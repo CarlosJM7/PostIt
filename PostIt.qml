@@ -7,7 +7,6 @@ Item {
     property bool creado : false
     property int posicion : 0
 
-
     Rectangle {
         id: rectangle
         anchors.verticalCenter: parent.verticalCenter
@@ -20,16 +19,19 @@ Item {
         border.color: "black"
         radius: 5
 
-        TextEdit {
+        TextEdit{
             id: textEdit
             width: parent.width*0.95
             height: parent.height*0.95
-            text: "Write here"
-            textFormat: Text.AutoText
             font.pixelSize: 12
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
             wrapMode: TextEdit.Wrap
+
+            Text{
+                id: textInside
+                visible: !textEdit.text
+            }
         }
     }
 
@@ -55,7 +57,6 @@ Item {
                     creado = true
                 }
                 else{
-
                     main_page.update_text(posicion, textEdit.text)
                     parent.parent.visible = false
                 }
@@ -94,7 +95,8 @@ Item {
     }
 
     function change_text(){
-        textEdit.text = "Write here"
+        textEdit.text = null
+        textInside.text = "Write here..."
     }
 
     function show_change_text(texto_cambiado){

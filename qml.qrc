@@ -8,6 +8,6 @@
         <file>Little.qml</file>
         <file>Example.qml</file>
         <file>TrashBucket.png</file>
-        <file>Sobre.png</file>
+        <file>Save.png</file>
     </qresource>
 </RCC>
