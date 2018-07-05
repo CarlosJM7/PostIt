@@ -29,4 +29,11 @@ Window {
 
     }
 
+    Component.onCompleted: {
+        main_page.load_storage()
+    }
+
+    Component.onDestruction: {
+        main_page.save_storage()
+    }
 }

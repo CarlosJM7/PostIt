@@ -1,6 +1,7 @@
 import QtQuick 2.0
 
 Item {
+    id: general_pst
     width: 375
     height: 668
 
@@ -42,6 +43,10 @@ Item {
         z: 2
         width: 75
         height: 74
+        //anchors.right: general_pst.right
+        //anchors.rightMargin: 0
+        //anchors.bottom: general_pst.bottom
+        //anchors.bottomMargin: 0
         source: "Tick.png"
 
         MouseArea {

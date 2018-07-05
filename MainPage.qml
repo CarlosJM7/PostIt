@@ -58,6 +58,17 @@ Image {
             width: 34
             anchors.verticalCenter: parent.verticalCenter
             anchors.horizontalCenter: parent.horizontalCenter
+            onClicked: {
+                var j
+                j={
+                    "posts" : []
+                }
+                for(var i = 0; i<model.count; i++){
+                    j["posts"].push(model.get(i).textoEscrito)
+                }
+
+                fileIO.write(JSON.stringify(j))
+            }
         }
     }
 
@@ -66,7 +77,7 @@ Image {
         height: parent.height*0.85
         width: parent.width
         anchors.verticalCenter: parent.verticalCenter
-        anchors.horizontalCenter: parent.horizontalAlignment
+        anchors.horizontalCenter: parent.horizontalCenter
         delegate: mydelegate
         model: model
         cellWidth: image.width/3
@@ -77,29 +88,36 @@ Image {
         id: mydelegate
 
         Rectangle{
-            color: "#f6df32"
-            border.color: "black"
-            border.width: 1
-            width: image.width/4
-            height: 80
-            radius: 5
+            color: "transparent"
+            height: mygrid.cellHeight
+            width: mygrid.cellWidth
 
-            Text{
-                width: parent.width*0.95
-                height: parent.height*0.95
-                text: textoEscrito /*"Pst " + index*/ /*Aqui escribire el titulo de la nota*/
-                color: "black"
-                anchors.verticalCenter: parent.verticalCenter
-                anchors.horizontalCenter: parent.horizontalCenter
-                wrapMode: TextEdit.Wrap
-                font.pixelSize: 8
-            }
+            Rectangle{
+                color: "#f6df32"
+                border.color: "black"
+                border.width: 1
+                width: image.width/4
+                height: 80
+                radius: 5
+                anchors.centerIn: parent
 
-            MouseArea{
-                anchors.fill: parent
-                onClicked:{
-                    pst.posicion = index
-                    show_note(index)
+                Text{
+                    width: parent.width*0.95
+                    height: parent.height*0.95
+                    text: textoEscrito
+                    color: "black"
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    wrapMode: TextEdit.Wrap
+                    font.pixelSize: 8
+                }
+
+                MouseArea{
+                    anchors.fill: parent
+                    onClicked:{
+                        pst.posicion = index
+                        show_note(index)
+                    }
                 }
             }
         }
@@ -137,5 +155,24 @@ Image {
 
     function update_text(nota_id, texto){
         model.setProperty(nota_id,"textoEscrito", texto)
+    }
+
+    function load_storage(){
+        var text = fileIO.read()
+        var j = JSON.parse(text)
+        for(var i = 0; i<j["posts"].length; i++){
+            add_new_note(j["posts"][i])
+        }
+    }
+
+    function save_storage(){
+        var j
+        j={
+            "posts" : []
+        }
+        for(var i = 0; i<model.count; i++){
+            j["posts"].push(model.get(i).textoEscrito)
+        }
+        fileIO.write(JSON.stringify(j))
     }
 }
